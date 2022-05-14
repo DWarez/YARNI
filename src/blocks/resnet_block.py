@@ -1,5 +1,3 @@
-"""ResNet block definition"""
-
 import sys
 sys.path.append('src/blocks')
 
@@ -16,7 +14,12 @@ layer_3x3 = partial(AutoPadConv2d, kernel_size=3, bias=False)
 
 
 class ResNetBlock(ResidualBlock):
-    """Class of ResNet's Residual Block
+    """ResNet's Basic Block
+    It's a concrete implementation of the abstract ResidualBlock, where we apply downsampling
+    via 2D convolution + batch normalization in the shortcut, while also expanding the
+    dimension of the output channels, if needed.
+    The main block (a.k.a. the CNN of the ResNet's block) applyes in a sequence 
+    convolution -> batch normalization -> non linearity -> convolution -> batch normalization
 
     Args:
         in_channles (int): number of input channels
@@ -25,15 +28,22 @@ class ResNetBlock(ResidualBlock):
         downsampling (int): size of the stride used in the 2D convolution when the shortucut is applied
         conv (f): convolution function used when creating a convolution+batch normalization block
     """
-    def __init__(self, in_channels, out_channels, expansion=1, downsampling=1, conv=layer_3x3, *args, **kwargs):
+    def __init__(self, in_channels, out_channels, activation=nn.ReLU, expansion=1, downsampling=1, conv=layer_3x3, *args, **kwargs):
         super().__init__(in_channels, out_channels)
         self.expansion, self.downsampling, self.conv = expansion, downsampling, conv
+
+        self.block = nn.Sequential(OrderedDict({
+                "conv1": self.conv(in_channels, out_channels, stride=self.downsampling, bias=False, *args, **kwargs),
+                "batch_norm1": nn.BatchNorm2d(out_channels),
+                "activation": activation(),
+                "conv2": self.conv(out_channels, self.expanded_channels, *args, **kwargs),
+                "batch_norm2": nn.BatchNorm2d(out_channels) 
+            }))
 
         self.shortcut = nn.Sequential(OrderedDict({
             "convolution": nn.Conv2d(self.in_channels, self.expanded_channels, kernel_size=1, stride=self.downsampling, bias=False),
             "batch_normalization": nn.BatchNorm2d(self.expanded_channels)
         })) if super().apply_shortcut else None
-
 
     @property
     def expanded_channels(self):
