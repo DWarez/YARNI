@@ -24,13 +24,13 @@ class ResNetBlock(ResidualBlock):
     Args:
         in_channles (int): number of input channels
         out_channels (int): number of output channels
-        expansion (int): expansion coefficient for the output channels
         downsampling (int): size of the stride used in the 2D convolution when the shortucut is applied
         conv (f): convolution function used when creating a convolution+batch normalization block
     """
-    def __init__(self, in_channels, out_channels, activation=nn.ReLU, expansion=1, downsampling=1, conv=layer_3x3, *args, **kwargs):
+    expansion = 1
+    def __init__(self, in_channels, out_channels, activation=nn.ReLU, downsampling=1, conv=layer_3x3, *args, **kwargs):
         super().__init__(in_channels, out_channels)
-        self.expansion, self.downsampling, self.conv = expansion, downsampling, conv
+        self.downsampling, self.conv = downsampling, conv
 
         self.block = nn.Sequential(OrderedDict({
                 "conv1": self.conv(in_channels, out_channels, stride=self.downsampling, bias=False, *args, **kwargs),
@@ -45,6 +45,7 @@ class ResNetBlock(ResidualBlock):
             "batch_normalization": nn.BatchNorm2d(self.expanded_channels)
         })) if super().apply_shortcut else None
 
+
     @property
     def expanded_channels(self):
-        return self.out_channels * self.expansion
+        return self.out_channels * ResNetBlock.expansion
