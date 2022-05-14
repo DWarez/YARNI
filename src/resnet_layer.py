@@ -1,5 +1,4 @@
 import sys
-from numpy import block
 sys.path.append('src/blocks')
 
 import torch
