@@ -1,7 +1,13 @@
-import torch
 import torch.nn as nn
 
 class ResNetDecoder(nn.Module):
+    """ResNet Decoder
+    Applies 2D average pooling and passes the result to a linear classifier
+
+    Args:
+        in_channels (int): number of input channels
+        n_classes (int): number of output classes
+    """
     def __init__(self, in_channels, n_classes):
         super().__init__()
 

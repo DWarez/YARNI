@@ -1,17 +1,20 @@
 import sys
 sys.path.append('src/blocks')
 
-import torch
 import torch.nn as nn
 from resnet_block import ResNetBlock
 from resnet_layer import ResNetLayer
 
 
 class ResNetEncoder(nn.Module):
-    """_summary_
+    """ResNetEncoder
 
     Args:
-        nn (_type_): _description_
+        in_channels (int): number of input channels
+        blocks_sizes (list): list of output channels per block
+        depths (list): list of number of layers per block
+        activation (nn.Module): activation function
+        base (nn.Module): baseline block
     """
     def __init__(self, in_channels=3, blocks_sizes=[64, 128, 256, 512], depths=[2, 2, 2, 2], activation=nn.ReLU, base=ResNetBlock, *args, **kwargs):
         super().__init__()

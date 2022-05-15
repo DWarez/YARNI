@@ -1,6 +1,5 @@
 """Residual Block definition"""
 
-import torch
 import torch.nn as nn
 
 

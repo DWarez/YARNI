@@ -32,6 +32,9 @@ testloader = torch.utils.data.DataLoader(testset, batch_size=BATCH_SIZE, shuffle
 
 classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
+
+print("[EPOCH ITERATION]")
+
 # Training loop
 for epoch in range(EPOCHS):
     running_loss = 0
@@ -47,7 +50,7 @@ for epoch in range(EPOCHS):
         optimizer.step()
 
         running_loss += loss.item()
-        if i % 100 == 0:
+        if i % 99 == 0:
             print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}')
             running_loss = 0.0
 

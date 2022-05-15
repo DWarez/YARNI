@@ -1,7 +1,6 @@
 import sys
 sys.path.append('src/blocks')
 
-import torch
 import torch.nn as nn
 from resnet_block import ResNetBlock
 

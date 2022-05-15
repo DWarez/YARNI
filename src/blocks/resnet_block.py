@@ -1,7 +1,6 @@
 import sys
 sys.path.append('src/blocks')
 
-import torch
 import torch.nn as nn
 from collections import OrderedDict
 from res_block import ResidualBlock
