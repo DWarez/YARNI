@@ -1,0 +1,1 @@
+In this folders you'll find the checkpoint of the trained network
