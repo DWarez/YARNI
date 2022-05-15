@@ -8,10 +8,11 @@ from decoder import ResNetDecoder
 
 
 class ResNet(nn.Module):
-    """_summary_
+    """ResNet implementation
 
     Args:
-        nn (_type_): _description_
+        in_channels (int): number of input channels
+        n_classes (int): number of output classes
     """
     def __init__(self, in_channels, n_classes, *args, **kwargs):
         super().__init__()
