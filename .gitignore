@@ -131,4 +131,4 @@ dmypy.json
 # Custom
 .vscode
 data
-checkpoints
+checkpoints/cifar_net.pth
