@@ -18,8 +18,7 @@ class ResNetLayer(nn.Module):
         downsampling = 2 if in_channels != out_channels else 1
         self.net = nn.Sequential(
             base(in_channels, out_channels, downsampling=downsampling, *args, **kwargs),
-            *[base(out_channels * base.expansion, out_channels, downsampling=1, *args, **kwargs) for _ in range(n_layers-1)]
-            #*[base(out_channels * 1, out_channels, downsampling=1, *args, **kwargs) for _ in range(n_layers-1)]
+            *[base(out_channels * base.expansion, out_channels, downsampling=1, *args, **kwargs) for _ in range(1, n_layers)]
         )
 
 
