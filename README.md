@@ -6,4 +6,5 @@ This repository has been made only for educational purposes. This implementation
 
 ### Credits
 Original paper [link](https://arxiv.org/abs/1512.03385)
+
 [Tutorial](https://github.com/FrancescoSaverioZuppichini/ResNet) I followed for the implementation details
