@@ -18,6 +18,7 @@ class ResidualBlock(nn.Module):
         self.shortcut = nn.Identity()
 
     
+    """In the forward step we compute H(x) + x, when using shortcuts"""
     def forward(self, x):
         residual = x
         if self.apply_shortcut:
